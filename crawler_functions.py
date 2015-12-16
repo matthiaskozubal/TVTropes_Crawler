@@ -33,13 +33,13 @@ def download_page_source(title, namespace="Main"):
 def get_subindexes_from_index(page_src):
     page_src = page_src.split('----')[1]
     page_lines = page_src.split('<br>')
-    return [sanitize_link(i) for i in page_lines if i.startswith('+')]
+    return [sanitize_link(i) for i in page_lines if i.startswith('+ ')]
 
 
 def get_entries_from_page(page_src):
     page_src = page_src.split('----')[1]
     page_lines = page_src.split('<br>')
-    return [sanitize_link(i) for i in page_lines if i.startswith('*')]
+    return [sanitize_link(i) for i in page_lines if i.startswith('* ')]
 
 
 def check_deep_link(link_txt):
