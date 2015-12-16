@@ -39,6 +39,7 @@ def get_subindexes_from_index(page_src):
 def get_entries_from_page(page_src):
     page_src = page_src.split('----')[1]
     page_lines = page_src.split('<br>')
+    # TODO: sometimes, links are not at the start of a line
     return [sanitize_link(i) for i in page_lines if i.startswith('* ')]
 
 
