@@ -36,7 +36,7 @@ def get_subindexes_from_index(page_src):
     return [sanitize_link(i) for i in page_lines if i.startswith('+ ')]
 
 
-def get_entries_from_page(page_src):
+def get_tropes_from_page(page_src):
     page_src = page_src.split('----')[1]
     page_lines = page_src.split('<br>')
     # TODO: sometimes, links are not at the start of a line
@@ -47,12 +47,19 @@ def check_deep_link(link_txt):
     return DEEP_LINK_PATTERN.search(link_txt) is not None
 
 
-def deep_get_entries_from_page(page_src):
-    links = get_entries_from_page(page_src)
+def deep_get_tropeses_from_page(page_src):
+    links = get_tropes_from_page(page_src)
     # TODO: I think we don't need a loop here, because links are not nested that much
     deep_links = [i for i in links if check_deep_link(i)]
     for i in deep_links:
         deep_page_src = download_page_source(i.split('/')[1], i.split('/')[0])  # TODO: it's ugly
-        links.extend(get_entries_from_page(deep_page_src))
+        links.extend(get_tropes_from_page(deep_page_src))
     links = [i for i in links if not check_deep_link(i)]
     return links
+
+
+def get_namespace_from_page(page_src, namespace):
+    """example namespaces: Literature, Film, WesternAnimation
+    """
+    pattern = re.compile(namespace + '/\w+')
+    return pattern.findall(page_src)
