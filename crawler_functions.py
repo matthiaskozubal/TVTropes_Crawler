@@ -12,6 +12,8 @@ DEEP_LINK_PATTERN = re.compile('/Tropes.To.')
 def sanitize_link(link_txt):
     # + shows a specific bullet
     link_txt = link_txt.replace('+ ', '')
+    # ** is another kind of bullet
+    link_txt = link_txt.replace('** ', '')
     # * is another kind of bullet
     link_txt = link_txt.replace('* ', '')
     # no parenthesis or colons
@@ -40,7 +42,7 @@ def get_tropes_from_page(page_src):
     page_src = page_src.split('----')[1]
     page_lines = page_src.split('<br>')
     # TODO: sometimes, links are not at the start of a line
-    return [sanitize_link(i) for i in page_lines if i.startswith('* ')]
+    return [sanitize_link(i) for i in page_lines if i.startswith('* ') or i.startswith('** ')]
 
 
 def check_deep_link(link_txt):
