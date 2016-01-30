@@ -3,11 +3,9 @@ import urllib.request
 import urllib.parse
 import re
 
-
 BASE_URL = "http://tvtropes.org/pmwiki/pmwiki.php/"
 URL_QUERY = "?action=source"
 DEEP_LINK_PATTERN = re.compile('/Tropes.To.')
-
 
 def sanitize_link(link_txt):
     # + shows a specific bullet
@@ -70,3 +68,8 @@ def get_namespace_from_page(page_src, namespace):
     """
     pattern = re.compile(namespace + '/\w+')
     return pattern.findall(page_src)
+
+
+def catch_exception(exception, current_tropes, subindex):
+    if exception in current_tropes:
+        print('Exception \'' + exception + '\' caught in \'' + subindex + '\'')

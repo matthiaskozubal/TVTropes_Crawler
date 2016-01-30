@@ -17,7 +17,7 @@ for subindex in subindex_list:
     print('Current subindex page: ' + subindex)    
     page_src = crawler_functions.download_page_source(subindex)
     sleep(CRAWL_PAUSE)   
-    #
+    
     # Subindexes
     current_page_subindex_list = crawler_functions.get_subindexes_from_index(page_src) # gets subindexes from current page    
     if current_page_subindex_list is None:
@@ -28,11 +28,13 @@ for subindex in subindex_list:
             subindex_list.append(current_page_subindex)
     subindex_list.remove(subindex)
     checked_subindex_list.append(subindex)
-    #
+    
     # Tropes
-    trope_list.extend(crawler_functions.get_tropes_from_page(page_src)) # gets tropes
+    current_tropes = crawler_functions.get_tropes_from_page(page_src)
+    crawler_functions.catch_exception('A', current_tropes, subindex)
+    trope_list.extend(current_tropes) # gets tropes
     # TODO: some subindexes (e.g. Opera) are already Tropes, we need function to check if a page is already a Trope
-    #
+    
     # Write to file list of checked subindexes
     with open('checked_subindex_list.txt', 'w') as output_checked_subindex_list:
         output_checked_subindex_list.write('\n'.join(sorted(checked_subindex_list)))
