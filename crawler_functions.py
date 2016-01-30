@@ -16,10 +16,12 @@ def sanitize_link(link_txt):
     link_txt = link_txt.replace('** ', '')
     # * is another kind of bullet
     link_txt = link_txt.replace('* ', '')
-    # no parenthesis or colons
+    # no parenthesis, colons or triple-apostrophes
     link_txt = link_txt.replace('[[', '').replace(']]', '')
     link_txt = link_txt.replace('{{', '').replace('}}', '')
     link_txt = link_txt.replace(':', '')
+    link_txt = link_txt.replace('\'\'\'', '')
+    link_txt = link_txt.replace('\'\'', '')            
     # only the first word
     link_txt = link_txt.split()[0]
     return link_txt
@@ -33,7 +35,10 @@ def download_page_source(title, namespace="Main"):
 
 
 def get_subindexes_from_index(page_src):
-    page_src = page_src.split('----')[1]
+    try:
+        page_src = page_src.split('----')[1]
+    except IndexError:
+        return None
     page_lines = page_src.split('<br>')
     return [sanitize_link(i) for i in page_lines if i.startswith('+ ')]
 
