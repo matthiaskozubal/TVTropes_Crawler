@@ -32,7 +32,7 @@ def download_page_source(title, namespace="Main", delay=0, local_file=None):
         url = BASE_URL + urllib.parse.quote(namespace + '/' + title) + URL_QUERY
         with urllib.request.urlopen(url) as request:
             source = request.read()
-            source = source.decode('Windows-1252')
+            source = source.decode('Windows-1252', errors='replace')
             sleep(delay)
     else:
         with open(local_file) as f:
