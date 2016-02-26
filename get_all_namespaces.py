@@ -4,7 +4,7 @@ import sys
 import re
 
 
-NAMESPACE_PATTERN = re.compile('\[\[folder:.+\]\]')
+NAMESPACE_PATTERN = re.compile('[A-Z]\w+/\w+')
 
 
 def get_namespaces_from_page(file_handle):
@@ -15,12 +15,8 @@ def get_namespaces_from_page(file_handle):
 
 if __name__ == '__main__':
     trope_dir = sys.argv[1]
-    all_namespaces = []
     for filename in os.listdir(trope_dir):
         with open(os.path.join(trope_dir, filename)) as f:
             current_namespaces = get_namespaces_from_page(f)
-            all_namespaces += current_namespaces
-    for i in all_namespaces:
-        print(i)
-
-
+            for i in current_namespaces:
+                print(i.split('/')[0])
