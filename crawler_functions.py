@@ -78,5 +78,5 @@ def deep_get_tropeses_from_page(page_src):
 def get_namespace_from_page(page_src, namespace):
     """example namespaces: Literature, Film, WesternAnimation
     """
-    pattern = re.compile(namespace + '/\w+')
+    pattern = re.compile(namespace + '/\w+', flags=re.I)
     return pattern.findall(page_src)
