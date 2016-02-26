@@ -7,13 +7,11 @@ from crawler_functions import get_namespace_from_page
 def get_media_from_dir(trope_dir, namespaces):
     media_titles = {i: [] for i in namespaces}
     for filename in os.listdir(trope_dir):
-        #print(filename)
         with open(os.path.join(trope_dir, filename)) as f:
             page_src = f.read()
         for namespace in namespaces:
             current_titles = get_namespace_from_page(page_src, namespace)
             media_titles[namespace].extend(current_titles)
-            #print(namespace + ' ' + str(media_titles[namespace]))
     for namespace in namespaces:
         media_titles[namespace] = list(set(media_titles[namespace]))
         media_titles[namespace].sort()
