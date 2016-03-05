@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import sys
 import crawler_functions
-from time import sleep
 
 
 CRAWL_DELAY = 1
@@ -9,8 +8,11 @@ CRAWL_DELAY = 1
 
 def download_from_list(trope_list):
     for trope in trope_list:
-        print('Downloading ' + trope)
-        crawler_functions.download_page_source(trope, delay=CRAWL_DELAY, local_file='Tropes/Main/' + trope.replace('/', '_'))
+        try:
+            print('Downloading ' + trope)
+            crawler_functions.download_page_source(trope, delay=CRAWL_DELAY, local_file='Tropes/Main/' + trope.replace('/', '_'))
+        except:
+            print('ERROR! Check page ' + trope + ' for problems')
 
 
 if __name__ == '__main__':
